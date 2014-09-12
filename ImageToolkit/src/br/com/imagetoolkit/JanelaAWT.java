@@ -34,7 +34,7 @@ public class JanelaAWT extends Frame {
                 if (retorno == JOptionPane.NO_OPTION) {
                     System.exit(0);
                 }
-                ExibirImagem.salvarBufferedImage(canvas.getImg(), "C:\\Users\\Public\\Pictures\\Sample Pictures\\temp.png");
+                Util.salvarBufferedImage(canvas.getImg(), "C:\\Users\\Public\\Pictures\\Sample Pictures\\temp.png");
                 System.exit(0);
             }
         });

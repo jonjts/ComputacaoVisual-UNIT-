@@ -111,6 +111,10 @@ public class Main extends javax.swing.JFrame {
 
     private void btnCinzaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCinzaActionPerformed
         BufferedImage cinza = Transformacao.transformeNivelCinza(bufferedImage, 0);
+        openJanela(cinza);
+    }
+
+    private void openJanela(BufferedImage cinza) {
         ImageCanvas icCinza = new ImageCanvas(cinza);
         janelaAWT.setVisible(false);
         janelaAWT = new JanelaAWT(icCinza);
@@ -119,10 +123,7 @@ public class Main extends javax.swing.JFrame {
 
     private void btnPretoBrancoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPretoBrancoActionPerformed
          BufferedImage pretoBranco = Binarizacao.binarize(bufferedImage, 0, 100);
-        ImageCanvas icPretoBranco = new ImageCanvas(pretoBranco);
-        janelaAWT.setVisible(false);
-        janelaAWT = new JanelaAWT(icPretoBranco);
-        janelaAWT.setVisible(true);
+        openJanela(pretoBranco);
     }//GEN-LAST:event_btnPretoBrancoActionPerformed
 
     private void loadImg(File file) throws IOException {

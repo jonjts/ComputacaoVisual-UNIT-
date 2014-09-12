@@ -4,6 +4,7 @@
  */
 package br.com.imagetoolkit;
 
+import br.com.imagetoolkit.JanelaAWTBonita;
 import java.awt.Component;
 import java.awt.Image;
 import java.awt.MediaTracker;
@@ -28,11 +29,18 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 public class ExibirImagem {
 
     public static void main(String[] args) {
-        File file = selectImage();
+      /*  File file = selectImage();
         BufferedImage image = carregarBufferedImage(file);
-        exibirPretoBranco(image);
+        exibirPretoBranco(image);*/
+
+        exibirTelaComOpcoes();
 
 
+    }
+
+    private static void exibirTelaComOpcoes(){
+        JanelaAWTBonita aWTBonita = new JanelaAWTBonita();
+        aWTBonita.setVisible(true);
     }
 
     private static void exibirPretoBranco(BufferedImage image) {
@@ -57,57 +65,7 @@ public class ExibirImagem {
 
     }
 
-    public static File selectImage() {
-        JFileChooser chooser = new JFileChooser();
-        FileNameExtensionFilter filter = new FileNameExtensionFilter("Arquivos de imagens", "jpg", "gif", "png");
-        chooser.setFileFilter(filter);
-        File file = null;
-        int returnVal = chooser.showOpenDialog(null);
-        if (returnVal == JFileChooser.APPROVE_OPTION) {
-            file = chooser.getSelectedFile();
-        }
-        return file;
-    }
-
-    public static BufferedImage carregarBufferedImage(File file) {
-        BufferedImage bufferedImage = null;
-        try {
-            bufferedImage = ImageIO.read(file);
-        } catch (IOException ex) {
-            System.err.println(ex.getMessage());
-        }
-        return bufferedImage;
-    }
-
-    protected  static void salvarBufferedImage(BufferedImage bufferedImage, String path) {
-        File file = new File(path);
-        if (file.exists()) {
-            int retorno = JOptionPane.showConfirmDialog(null,
-                    "File ja existe, sobreescrever?",
-                    "Confirmação",
-                    JOptionPane.YES_NO_OPTION,
-                    JOptionPane.NO_OPTION);
-            if (retorno == JOptionPane.NO_OPTION) {
-                return;
-            }
-        }
-        try {
-            ImageIO.write(bufferedImage, "png", file);
-        } catch (Exception e) {
-            System.err.println(e.getMessage());
-        }
-    }
-
-    private static Image carregarImagem(String file) {
-        Image image = Toolkit.getDefaultToolkit().getImage(file);
-        MediaTracker tracker = new MediaTracker(new Component() {
-        });
-        tracker.addImage(image, 0);
-        try {
-            tracker.waitForID(0);
-        } catch (InterruptedException ex) {
-            Logger.getLogger(ExibirImagem.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return image;
-    }
+    
+   
+    
 }
