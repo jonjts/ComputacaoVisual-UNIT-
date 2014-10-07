@@ -4,6 +4,7 @@
  */
 package br.com.imagetoolkit;
 
+import br.com.imagetoolkit.util.Util;
 import java.awt.Frame;
 import java.awt.HeadlessException;
 import java.awt.event.WindowAdapter;
