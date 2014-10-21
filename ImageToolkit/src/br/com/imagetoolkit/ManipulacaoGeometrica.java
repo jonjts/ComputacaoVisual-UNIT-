@@ -75,7 +75,7 @@ public class ManipulacaoGeometrica {
     }
 
     public static BufferedImage rotacao270Graus(BufferedImage image) {
-        return rotação90Graus(reflexaoYInPlace(image));
+        return rotação90Graus(rotação90Graus(rotação90Graus(image)));
 
     }
 

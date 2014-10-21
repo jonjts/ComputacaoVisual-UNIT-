@@ -12,6 +12,7 @@ package br.com.imagetoolkit;
 
 import br.com.imagetoolkit.util.Util;
 import br.com.imagetoolkit.desenho.ISubImagem;
+import br.com.imagetoolkit.tela.TelaHistograma;
 import java.awt.Canvas;
 import java.awt.Panel;
 import java.awt.Point;
@@ -64,6 +65,11 @@ public class ExibirImagem extends javax.swing.JFrame implements ISubImagem {
         miRotacao270 = new javax.swing.JMenuItem();
         jMenu1 = new javax.swing.JMenu();
         miRemoverRuido = new javax.swing.JMenuItem();
+        histograma = new javax.swing.JMenu();
+        miHistNormal = new javax.swing.JMenuItem();
+        miHistAcumu = new javax.swing.JMenuItem();
+        miHistNorma = new javax.swing.JMenuItem();
+        miHistNormaAcum = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -164,6 +170,42 @@ public class ExibirImagem extends javax.swing.JFrame implements ISubImagem {
 
         jMenuBar1.add(jMenu1);
 
+        histograma.setText("Histograma");
+
+        miHistNormal.setText("Histograma Normal");
+        miHistNormal.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                miHistNormalActionPerformed(evt);
+            }
+        });
+        histograma.add(miHistNormal);
+
+        miHistAcumu.setText("Histograma Acumulativo");
+        miHistAcumu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                miHistAcumuActionPerformed(evt);
+            }
+        });
+        histograma.add(miHistAcumu);
+
+        miHistNorma.setText("Histograma Normalizado");
+        miHistNorma.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                miHistNormaActionPerformed(evt);
+            }
+        });
+        histograma.add(miHistNorma);
+
+        miHistNormaAcum.setText("Histograma Norm. Acumulativo");
+        miHistNormaAcum.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                miHistNormaAcumActionPerformed(evt);
+            }
+        });
+        histograma.add(miHistNormaAcum);
+
+        jMenuBar1.add(histograma);
+
         setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -255,6 +297,30 @@ public class ExibirImagem extends javax.swing.JFrame implements ISubImagem {
         updateCanvas(bfOperacao);
     }//GEN-LAST:event_miRotacao270ActionPerformed
 
+    private void miHistNormalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miHistNormalActionPerformed
+        final int[] hist = Histograma.calcularHistograma(bfOperacao);
+        TelaHistograma telaHistograma = new TelaHistograma(hist, "Histograma");
+        telaHistograma.setVisible(true);
+}//GEN-LAST:event_miHistNormalActionPerformed
+
+    private void miHistAcumuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miHistAcumuActionPerformed
+        final int[] hist = Histograma.calcularHistogramaAcumulativo(bfOperacao);
+        TelaHistograma telaHistograma = new TelaHistograma(hist, "Histograma Acumulativo");
+        telaHistograma.setVisible(true);
+}//GEN-LAST:event_miHistAcumuActionPerformed
+
+    private void miHistNormaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miHistNormaActionPerformed
+        final double[] hist = Histograma.calcularHistogramaNormalizado(bfOperacao);
+        TelaHistograma telaHistograma = new TelaHistograma(hist, "Histograma Normalizado");
+        telaHistograma.setVisible(true);
+    }//GEN-LAST:event_miHistNormaActionPerformed
+
+    private void miHistNormaAcumActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miHistNormaAcumActionPerformed
+        final double[] hist = Histograma.calcularHistogramaNormalizadoAcumulativo(bfOperacao);
+        TelaHistograma telaHistograma = new TelaHistograma(hist, "Histograma Normalizado Acumulativo");
+        telaHistograma.setVisible(true);
+    }//GEN-LAST:event_miHistNormaAcumActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -299,11 +365,16 @@ public class ExibirImagem extends javax.swing.JFrame implements ISubImagem {
     private javax.swing.JMenu carregar;
     private javax.swing.JMenuItem carregarImg;
     private javax.swing.JMenu editar;
+    private javax.swing.JMenu histograma;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem miCarregarOriginal;
     private javax.swing.JMenuItem miCinza;
     private javax.swing.JMenuItem miEnlargecer;
+    private javax.swing.JMenuItem miHistAcumu;
+    private javax.swing.JMenuItem miHistNorma;
+    private javax.swing.JMenuItem miHistNormaAcum;
+    private javax.swing.JMenuItem miHistNormal;
     private javax.swing.JMenuItem miPretoBranco;
     private javax.swing.JMenuItem miReduzir;
     private javax.swing.JMenuItem miReflexao;
