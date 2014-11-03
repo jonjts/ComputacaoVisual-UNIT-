@@ -12,6 +12,7 @@ package br.com.imagetoolkit;
 
 import br.com.imagetoolkit.util.Util;
 import br.com.imagetoolkit.desenho.ISubImagem;
+import br.com.imagetoolkit.mapeamento.MapeamentoNaoLinear;
 import br.com.imagetoolkit.tela.TelaHistograma;
 import java.awt.Canvas;
 import java.awt.Panel;
@@ -70,6 +71,11 @@ public class ExibirImagem extends javax.swing.JFrame implements ISubImagem {
         miHistAcumu = new javax.swing.JMenuItem();
         miHistNorma = new javax.swing.JMenuItem();
         miHistNormaAcum = new javax.swing.JMenuItem();
+        mapeamento = new javax.swing.JMenu();
+        miLogaritimo = new javax.swing.JMenuItem();
+        miRaizQuadrada = new javax.swing.JMenuItem();
+        miQuadrada = new javax.swing.JMenuItem();
+        miExponecial = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -206,6 +212,42 @@ public class ExibirImagem extends javax.swing.JFrame implements ISubImagem {
 
         jMenuBar1.add(histograma);
 
+        mapeamento.setText("Mapeamento");
+
+        miLogaritimo.setText("Logaritmo");
+        miLogaritimo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                miLogaritimoActionPerformed(evt);
+            }
+        });
+        mapeamento.add(miLogaritimo);
+
+        miRaizQuadrada.setText("Raiz Quadrada");
+        miRaizQuadrada.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                miRaizQuadradaActionPerformed(evt);
+            }
+        });
+        mapeamento.add(miRaizQuadrada);
+
+        miQuadrada.setText("Quadrado");
+        miQuadrada.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                miQuadradaActionPerformed(evt);
+            }
+        });
+        mapeamento.add(miQuadrada);
+
+        miExponecial.setText("Exponecial");
+        miExponecial.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                miExponecialActionPerformed(evt);
+            }
+        });
+        mapeamento.add(miExponecial);
+
+        jMenuBar1.add(mapeamento);
+
         setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -321,6 +363,26 @@ public class ExibirImagem extends javax.swing.JFrame implements ISubImagem {
         telaHistograma.setVisible(true);
     }//GEN-LAST:event_miHistNormaAcumActionPerformed
 
+    private void miLogaritimoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miLogaritimoActionPerformed
+        bfOperacao = MapeamentoNaoLinear.mapeamentoLogaritimo(bfOperacao, 0);
+        updateCanvas(bfOperacao);
+    }//GEN-LAST:event_miLogaritimoActionPerformed
+
+    private void miRaizQuadradaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miRaizQuadradaActionPerformed
+        bfOperacao = MapeamentoNaoLinear.mapeamentoQuadrado(bfOperacao);
+        updateCanvas(bfOperacao);
+    }//GEN-LAST:event_miRaizQuadradaActionPerformed
+
+    private void miQuadradaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miQuadradaActionPerformed
+        bfOperacao = MapeamentoNaoLinear.mapeamentoQuadrado(bfOperacao);
+        updateCanvas(bfOperacao);
+    }//GEN-LAST:event_miQuadradaActionPerformed
+
+    private void miExponecialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miExponecialActionPerformed
+        bfOperacao = MapeamentoNaoLinear.mapeamentoExponencial(bfOperacao);
+        updateCanvas(bfOperacao);
+    }//GEN-LAST:event_miExponecialActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -368,14 +430,19 @@ public class ExibirImagem extends javax.swing.JFrame implements ISubImagem {
     private javax.swing.JMenu histograma;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenu mapeamento;
     private javax.swing.JMenuItem miCarregarOriginal;
     private javax.swing.JMenuItem miCinza;
     private javax.swing.JMenuItem miEnlargecer;
+    private javax.swing.JMenuItem miExponecial;
     private javax.swing.JMenuItem miHistAcumu;
     private javax.swing.JMenuItem miHistNorma;
     private javax.swing.JMenuItem miHistNormaAcum;
     private javax.swing.JMenuItem miHistNormal;
+    private javax.swing.JMenuItem miLogaritimo;
     private javax.swing.JMenuItem miPretoBranco;
+    private javax.swing.JMenuItem miQuadrada;
+    private javax.swing.JMenuItem miRaizQuadrada;
     private javax.swing.JMenuItem miReduzir;
     private javax.swing.JMenuItem miReflexao;
     private javax.swing.JMenuItem miRemoverRuido;
