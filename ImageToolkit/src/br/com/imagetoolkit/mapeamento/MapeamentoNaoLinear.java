@@ -21,11 +21,11 @@ public class MapeamentoNaoLinear {
         int w = image.getWidth();
         int h = image.getHeight();
         WritableRaster raster = image.getRaster();
-        byte[][] table = new byte[w][h];
+        byte[] table = new byte[256];
         for (int x = 0; x < w; x++) {
             for (int y = 0; y < h; y++) {
                 double valor = a * Math.log(raster.getSample(x, y, 0)) + 1;
-                table[x][y] = (byte) valor;
+                table[x] = (byte) valor;
             }
         }
         ByteLookupTable byteLookupTable = new ByteLookupTable(0, table);
