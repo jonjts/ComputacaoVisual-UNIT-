@@ -65,11 +65,11 @@ public class BolaImagem {
         int primFlags = Primitive.GENERATE_NORMALS + Primitive.GENERATE_TEXTURE_COORDS;
         Sphere bola = new Sphere(0.5f, primFlags, 150, ap);
         tg.addChild(bola);
-        
+
         Alpha alpha = new Alpha();
         alpha.setIncreasingAlphaDuration(50000);
         RotationInterpolator rotacao = new RotationInterpolator(alpha, tg);
-        BoundingSphere limiteRot = new BoundingSphere(new Point3d(0,0,0), 10);
+        BoundingSphere limiteRot = new BoundingSphere(new Point3d(0, 0, 0), 10);
         rotacao.setSchedulingBounds(limiteRot);
         tg.addChild(rotacao);
 
