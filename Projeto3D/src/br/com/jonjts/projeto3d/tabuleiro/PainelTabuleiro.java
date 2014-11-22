@@ -204,12 +204,12 @@ public class PainelTabuleiro extends JPanel {
         group.setCapability(TransformGroup.ALLOW_TRANSFORM_WRITE);
         group.setTransform(t3d);
         
-        /*Alpha alpha = new Alpha();
+        Alpha alpha = new Alpha();
         alpha.setIncreasingAlphaDuration(50000);
         RotationInterpolator rotacao = new RotationInterpolator(alpha, group);
         BoundingSphere limiteRot = new BoundingSphere(new Point3d(0,4,0), 10);
         rotacao.setSchedulingBounds(limiteRot);
-        group.addChild(rotacao);*/
+        group.addChild(rotacao);
         
         int primFlags = Primitive.GENERATE_NORMALS + Primitive.GENERATE_TEXTURE_COORDS;
         Sphere bola = new Sphere(3f, primFlags, 150, ap);
