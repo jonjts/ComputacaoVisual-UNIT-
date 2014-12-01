@@ -21,6 +21,8 @@ import java.awt.*;
 import java.awt.event.*;
 import java.text.DecimalFormat;
 import java.io.*;
+import java.util.ArrayList;
+import java.util.Vector;
 
 import javax.vecmath.*;
 
@@ -44,22 +46,19 @@ public class Loader3D extends JFrame
     private JButton saveBut;
     private DecimalFormat df;    // for textfield output
 
+    private JComboBox<PropManager> cbObjetos;
+    private Vector<PropManager> objetos;
+
     public Loader3D(String args[]) {
         super("3D loader");
 
-        boolean hasCoordsInfo = false;
-        String fileName = null;
-        if ((args.length == 2) && (args[0].equals("-c"))) {
-            hasCoordsInfo = true;
-            fileName = args[1];
-        } else if (args.length == 1) {
-            fileName = args[0];
-        } else {
-            System.out.println("Usage: java Loader3D [-c] <file>");
-            System.exit(0);
-        }
+        boolean hasCoordsInfo = true;
+        String fileName = "objects.txt";
 
         w3d = new WrapLoader3D(fileName, hasCoordsInfo);
+
+        objetos = w3d.getPropManagers();
+
         initGUI();
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -91,6 +90,16 @@ public class Loader3D extends JFrame
         c.add(w3d, BorderLayout.CENTER);
 
         // build input controls
+        JPanel p0 = new JPanel();
+        cbObjetos = new JComboBox<PropManager>(new DefaultComboBoxModel<PropManager>(objetos));
+        cbObjetos.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                w3d.setPropMan((PropManager) cbObjetos.getSelectedItem());
+            }
+        });
+        p0.add(cbObjetos);
 
         JPanel p1 = new JPanel();
         JLabel xPosLabel = new JLabel("X incr:");
@@ -142,7 +151,6 @@ public class Loader3D extends JFrame
         p5.add(yRotLeftBut);
         p5.add(yRotRightBut);
 
-
         JPanel p6 = new JPanel();
         JLabel zRotLabel = new JLabel("Z rot:");
         zRotLeftBut = new JButton(leftIcon);
@@ -166,7 +174,6 @@ public class Loader3D extends JFrame
         p8.add(saveBut);
 
         // build info. reporting controls
-
         JLabel xyzLabel = new JLabel("Pos (x,y,z):");
         xyzTF = new JTextField(10);
         xyzTF.setEditable(false);
@@ -187,6 +194,7 @@ public class Loader3D extends JFrame
         ctrlPanel.setLayout(
                 new BoxLayout(ctrlPanel, BoxLayout.Y_AXIS));
         // add input controls
+        ctrlPanel.add(p0);
         ctrlPanel.add(p1);
         ctrlPanel.add(p2);
         ctrlPanel.add(p3);
@@ -218,31 +226,59 @@ public class Loader3D extends JFrame
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == saveBut) {
+        if (e.getSource() == saveBut) // save coord info
+        {
             w3d.saveCoordFile();
-        } else if (e.getSource() == xPosLeftBut) {
+        } else if (e.getSource() == xPosLeftBut) // X move
+        {
             w3d.movePos(X_AXIS, DECR);
         } else if (e.getSource() == xPosRightBut) {
             w3d.movePos(X_AXIS, INCR);
-        } else if (e.getSource() == yPosLeftBut) {
-            w3d.movePos(Y_AXIS, INCR);
-        } else if (e.getSource() == yPosRightBut) {
+        } else if (e.getSource() == yPosLeftBut) // Y move
+        {
             w3d.movePos(Y_AXIS, DECR);
-        } else if (e.getSource() == zPosLeftBut) {
-            w3d.movePos(Z_AXIS, INCR);
-        } else if (e.getSource() == zPosRightBut) {
+        } else if (e.getSource() == yPosRightBut) {
+            w3d.movePos(Y_AXIS, INCR);
+        } else if (e.getSource() == zPosLeftBut) // Z move
+        {
             w3d.movePos(Z_AXIS, DECR);
-        } else if (e.getSource() == scaleTF) {
+        } else if (e.getSource() == zPosRightBut) {
+            w3d.movePos(Z_AXIS, INCR);
+        } else if (e.getSource() == xRotLeftBut) // X rotation
+        {
+            w3d.rotate(X_AXIS, DECR);
+        } else if (e.getSource() == xRotRightBut) {
+            w3d.rotate(X_AXIS, INCR);
+        } else if (e.getSource() == yRotLeftBut) // Y rotation
+        {
+            w3d.rotate(Y_AXIS, INCR);
+        } else if (e.getSource() == yRotRightBut) {
+            w3d.rotate(Y_AXIS, DECR);
+        } else if (e.getSource() == zRotLeftBut) // Z rotation
+        {
+            w3d.rotate(Z_AXIS, INCR);
+        } else if (e.getSource() == zRotRightBut) {
+            w3d.rotate(Z_AXIS, DECR);
+        } else if (e.getSource() == scaleTF) {   // scale
             try {
                 double d = Double.parseDouble(e.getActionCommand());
                 w3d.scale(d);
-            } catch (Exception ex) {
+            } catch (NumberFormatException ex) {
                 System.out.println("Scale input was not a number");
             }
         }
-        showPosInfo();
+        showPosInfo();   // update on-screen display
         showRotInfo();
         showScale();
+    }
+
+    private PropManager[] createArray(ArrayList<PropManager> list) {
+        int count = 0;
+        PropManager[] array = new PropManager[list.size()];
+        for (PropManager pm : list) {
+            array[count++] = pm;
+        }
+        return array;
     }
 
     private void showPosInfo() {

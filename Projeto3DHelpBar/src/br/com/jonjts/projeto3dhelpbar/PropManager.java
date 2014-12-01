@@ -96,7 +96,6 @@ public class PropManager {
         moveTG.setCapability(TransformGroup.ALLOW_TRANSFORM_WRITE);
         moveTG.addChild(rotTG);
 
-
     }
 
     private String getExtension(String fnm) {
@@ -417,8 +416,9 @@ public class PropManager {
 
             out.println(filename);     // object filename
             Vector3d currLoc = getLoc();
-            out.println("-p " + df.format(currLoc.x) + " " + df.format(currLoc.y)
-                    + " " + df.format(currLoc.z));
+            final String coor = "-p " + replaceVirgula(df.format(currLoc.x)) + " " + replaceVirgula(df.format(currLoc.y))
+                    + " " + replaceVirgula(df.format(currLoc.z));
+            out.println(coor);
             out.print("-r ");
             for (int i = 0; i < rotInfo.size(); i++) {
                 out.print("" + ((Integer) rotInfo.get(i)).intValue());
@@ -450,4 +450,14 @@ public class PropManager {
                 + ", " + id + " y: " + df.format(t.y)
                 + ", " + id + " z: " + df.format(t.z));
     }  // end of printTuple()
+
+    private String replaceVirgula(String valor) {
+        return valor.replaceAll(",", ".");
+    }
+
+    @Override
+    public String toString() {
+        return getName(filename);
+    }
+
 }

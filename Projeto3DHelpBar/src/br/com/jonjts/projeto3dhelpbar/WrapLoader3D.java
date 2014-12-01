@@ -21,6 +21,11 @@ import javax.vecmath.Vector3f;
 import com.sun.j3d.utils.behaviors.vp.OrbitBehavior;
 import com.sun.j3d.utils.universe.SimpleUniverse;
 import com.sun.j3d.utils.universe.ViewingPlatform;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Vector;
 
 public class WrapLoader3D extends JPanel {
 
@@ -35,14 +40,14 @@ public class WrapLoader3D extends JPanel {
     private TransformGroup objectTG;    // TG which the loaded object hangs off
     private PropManager propMan;        // manages the manipulation of the 
     // loaded object
+    
+    private Vector<PropManager> propManagers;
 
     // private Java3dTree j3dTree;   // frame to hold tree display
     public WrapLoader3D(String filename, boolean hasCoordsInfo) {
         setLayout(new BorderLayout());
         setOpaque(false);
         setPreferredSize(new Dimension(PWIDTH, PHEIGHT));
-
-        propMan = new PropManager(filename, hasCoordsInfo);
 
         GraphicsConfiguration config = SimpleUniverse.getPreferredConfiguration();
         Canvas3D canvas3D = new Canvas3D(config);
@@ -60,13 +65,29 @@ public class WrapLoader3D extends JPanel {
     private void createSceneGraph(String filename) {
         sceneBG = new BranchGroup();
         bounds = new BoundingSphere(new Point3d(0, 0, 0), BOUNDSIZE);
+        
+        propManagers = new Vector<PropManager>();
 
         lightScene();
         addBackground();
         sceneBG.addChild(new CheckerFloor().getBG());
+        PropManager propMan = null;
+        try {
+            BufferedReader br = new BufferedReader(new FileReader(filename));
+            String line;
+            while ((line = br.readLine()) != null) {
+                System.out.println(line);
 
-        sceneBG.addChild(propMan.getTG());
+                propMan = new PropManager(line.trim(), true);
+                propManagers.add(propMan);
+                sceneBG.addChild(propMan.getTG());
 
+            }
+            this.propMan = propManagers.firstElement();
+            br.close();
+        } catch (IOException e) {
+            System.exit(1);
+        }
         sceneBG.compile();
     }
 
@@ -146,5 +167,13 @@ public class WrapLoader3D extends JPanel {
 
     public void saveCoordFile() {
         propMan.saveCoordFile();
+    }
+
+    public void setPropMan(PropManager propMan) {
+        this.propMan = propMan;
+    }
+
+    public Vector<PropManager> getPropManagers() {
+        return propManagers;
     }
 }
